@@ -34,7 +34,7 @@ func Monitor(ctx context.Context, build string, webhook string) {
 		switch b.Status {
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
 			log.Printf("Terminal status reached.  Notifying")
-			Notify(b, webhook)
+			Notify(b, webhook, project)
 			return
 		}
 		<-t
