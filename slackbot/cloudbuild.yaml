@@ -4,8 +4,9 @@ steps:
 # Slack notification
 - name: 'gcr.io/$PROJECT_ID/slackbot'
   id: Slack notification
-  args: [ '--build', '$BUILD_ID',
-          '--webhook', '$_SLACK_WEBHOOK' ]
+  args: [ '--build', '$BUILD_ID', '--webhook', '$_WEBHOOK' ]
+  substitutions:
+      $_WEBHOOK: $_SLACK_WEBHOOK
 images:
 - 'gcr.io/$PROJECT_ID/slackbot'
 tags: ['cloud-builders-community']
