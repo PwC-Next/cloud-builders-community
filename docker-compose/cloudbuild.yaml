@@ -14,12 +14,6 @@ steps:
   - '.'
 - name: 'gcr.io/$PROJECT_ID/docker-compose'
   args: ['version']
-# Slack notification
-- name: 'gcr.io/$PROJECT_ID/slackbot'
-  id: Slack notification
-  args: [ '--build', '$BUILD_ID',
-          '--webhook', '$_SLACK_WEBHOOK' ]
-
 images:
 - 'gcr.io/$PROJECT_ID/docker-compose:latest'
 - 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
