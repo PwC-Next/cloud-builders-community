@@ -25,7 +25,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		i = ":question:"
 	}
 	j := fmt.Sprintf(
-		`{"text": "%s Build %s complete: %s %s",
+		`{"text": "%s Build (%s) complete: %s %s",
 		    "attachments": [
 				{
 					"fallback": "Open build details at %s",
