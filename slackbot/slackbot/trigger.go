@@ -14,7 +14,7 @@ func Trigger(ctx context.Context, build string, webhook string) {
 	b := &cloudbuild.Build{
 		Steps: []*cloudbuild.BuildStep{
 			&cloudbuild.BuildStep{
-				Name: "gcr.io/$_CONTAINER_PROJECT/slackbot",
+				Name: "gcr.io/acuit-dev/slackbot",
 				Args: []string{
 					fmt.Sprintf("--build=%s", build),
 					fmt.Sprintf("--webhook=%s", webhook),
