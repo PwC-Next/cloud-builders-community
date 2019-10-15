@@ -37,7 +37,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 						}
 					]
 				}
-			]}`, project, b.Source, b.Id[0:7], i, b.Status, url, url)
+			]}`, project, b.Source.RepoSource.RepoName, b.Id[0:7], i, b.Status, url, url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
