@@ -13,6 +13,10 @@ import (
 // Notify posts a notification to Slack that the build is complete.
 func Notify(b *cloudbuild.Build, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s", b.Id)
+	repo := ""
+	if b.Source.RepoSource.RepoName != "" {
+		repo = b.Source.RepoSource.RepoName
+	}
 	var i string
 	switch b.Status {
 	case "SUCCESS":
@@ -37,7 +41,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 						}
 					]
 				}
-			]}`, project, b.Source.RepoSource.RepoName, b.Id[0:7], i, b.Status, url, url)
+			]}`, project, repo, b.Id[0:7], i, b.Status, url, url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
