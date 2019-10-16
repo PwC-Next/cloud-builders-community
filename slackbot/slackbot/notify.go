@@ -14,8 +14,10 @@ import (
 func Notify(b *cloudbuild.Build, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s", b.Id)
 	repo := ""
-	if b.Source.RepoSource.RepoName != "" {
-		repo = b.Source.RepoSource.RepoName
+	if b.Source != "" {
+		if b.Source.RepoSource != "" {
+			repo = b.Source.RepoSource.RepoName
+		}
 	}
 	var i string
 	switch b.Status {
