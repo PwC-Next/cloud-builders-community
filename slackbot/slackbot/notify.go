@@ -25,7 +25,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		i = ":question:"
 	}
 	j := fmt.Sprintf(
-		`{"text": "%s - %s - Build (%s) complete: %s %s",
+		`{"text": "%s - Build (%s) complete: %s %s \nBranch:  %s \nTag: %s ",
 		    "attachments": [
 				{
 					"fallback": "Open build details at %s",
@@ -37,7 +37,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 						}
 					]
 				}
-			]}`, project, b.BuildTriggerId, b.Id[0:7], i, b.Status, url, url)
+			]}`, project, b.Id[0:7], i, b.Status, b.source.repoSource.branchName, b.source.repoSource.tagName, url, url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
