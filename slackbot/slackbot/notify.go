@@ -15,19 +15,19 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s?project=%s", b.Id, project)
 	var i string
 	var branch_string string
-	branch_string = "Repo details not found"
+	branch_string = "Branch / Tag details feature coming soon"
+	//
+	//
+	//	branch_string = "Source found"
+	//	if b.Source.RepoSource != "" {
+	//		if len(b.Source.RepoSource.brnachName) > 0 {
+	//			branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.branchName)
+	//		}
+	//		if len(b.Source.RepoSource.TagName) > 0 {
+	//			branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
+	//		}
+	//	}
 
-	if len(b.Source) > 0 {
-		branch_string = "Source found"
-		if b.Source.RepoSource != "" {
-			if len(b.Source.RepoSource.Revision) > 0 {
-				branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.Revision)
-			}
-			if len(b.Source.RepoSource.TagName) > 0 {
-				branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
-			}
-		}
-	}
 
 	switch b.Status {
 	case "SUCCESS":
