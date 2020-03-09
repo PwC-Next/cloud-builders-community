@@ -14,6 +14,16 @@ import (
 func Notify(b *cloudbuild.Build, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s?project=%s", b.Id, project)
 	var i string
+	var branch_string string
+	branch_string = "Repo details not found"
+
+	if len(b.Source.RepoSource.BranchName) > 0 {
+		branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.BranchName)
+	}
+	if len(b.Source.RepoSource.TagName) > 0 {
+		branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
+	}
+
 	switch b.Status {
 	case "SUCCESS":
 		i = ":white_check_mark:"
@@ -25,7 +35,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		i = ":question:"
 	}
 	j := fmt.Sprintf(
-		`{"text": "%s - Build (%s) complete: %s %s \nBranch:  %s \nTag: %s ",
+		`{"text": "%s - Build (%s) complete: %s %s \n %s ",
 		    "attachments": [
 				{
 					"fallback": "Open build details at %s",
@@ -37,7 +47,14 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 						}
 					]
 				}
-			]}`, project, b.Id[0:7], i, b.Status, b.Source.repoSource.branchName, b.Source.repoSource.tagName, url, url)
+			]}`,
+			project,
+			b.Id[0:7],
+			i,
+			b.Status,
+			branch_string,
+			url,
+			url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
