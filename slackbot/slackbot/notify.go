@@ -1,7 +1,6 @@
 package slackbot
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
