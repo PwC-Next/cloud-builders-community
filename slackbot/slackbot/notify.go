@@ -17,11 +17,13 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 	var branch_string string
 	branch_string = "Repo details not found"
 
-	if len(b.Source.RepoSource.BranchName) > 0 {
-		branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.BranchName)
-	}
-	if len(b.Source.RepoSource.TagName) > 0 {
-		branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
+	if len(b.Source.RepoSource) > 0 {
+		if len(b.Source.RepoSource.BranchName) > 0 {
+			branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.BranchName)
+		}
+		if len(b.Source.RepoSource.TagName) > 0 {
+			branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
+		}
 	}
 
 	switch b.Status {
@@ -48,13 +50,13 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 					]
 				}
 			]}`,
-			project,
-			b.Id[0:7],
-			i,
-			b.Status,
-			branch_string,
-			url,
-			url)
+		project,
+		b.Id[0:7],
+		i,
+		b.Status,
+		branch_string,
+		url,
+		url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
