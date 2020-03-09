@@ -1,6 +1,7 @@
 package slackbot
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -17,7 +18,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 	var branch_string string
 	branch_string = "Repo details not found"
 
-	fmt.Println(b)
+	fmt.Printf("%+v\n", b)
 	//if len(b.Source.RepoSource) > 0 {
 	//
 	//	branch_string = "Repo details" + b.Source.RepoSource
