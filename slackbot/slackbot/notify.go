@@ -17,14 +17,17 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 	var branch_string string
 	branch_string = "Repo details not found"
 
-	if len(b.Source.RepoSource) > 0 {
-		if len(b.Source.RepoSource.BranchName) > 0 {
-			branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.BranchName)
-		}
-		if len(b.Source.RepoSource.TagName) > 0 {
-			branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
-		}
-	}
+	fmt.Println(b)
+	//if len(b.Source.RepoSource) > 0 {
+	//
+	//	branch_string = "Repo details" + b.Source.RepoSource
+	//	if len(b.Source.RepoSource.BranchName) > 0 {
+	//		branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.BranchName)
+	//	}
+	//	if len(b.Source.RepoSource.TagName) > 0 {
+	//		branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
+	//	}
+	//}
 
 	switch b.Status {
 	case "SUCCESS":
