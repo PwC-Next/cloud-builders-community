@@ -20,6 +20,8 @@ func Monitor(ctx context.Context, build string, webhook string) {
 	t := time.Tick(20 * time.Second)
 	for {
 		log.Printf("Polling build %s", build)
+
+		// https://cloud.google.com/cloud-build/docs/api/reference/rest/Shared.Types/Build
 		lc := svc.Projects.Builds.Get(project, build)
 		b, err := lc.Do()
 		if err != nil {
