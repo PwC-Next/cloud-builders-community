@@ -36,6 +36,7 @@ func Monitor(ctx context.Context, build string, webhook string) {
 
 		//GET https://cloudbuild.googleapis.com/v1/projects/{projectId}/triggers/{triggerId}
 		//Returns t which is a BuildTrigger:  BuildTrigger struct: https://cloud.google.com/cloud-build/docs/api/reference/rest/v1/projects.triggers#BuildTrigger
+		var trig
 		if b.BuildTriggerId != "" {
 			lc2 := svc.Projects.Triggers.Get(project, b.BuildTriggerId)
 			trig, err := lc2.Do()
@@ -47,6 +48,7 @@ func Monitor(ctx context.Context, build string, webhook string) {
 				} else {
 					log.Fatalf("Reached maximum number of errors (%d).  Exiting", maxErrors)
 				}
+			}
 		}
 
 		switch b.Status {
