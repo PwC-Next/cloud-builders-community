@@ -11,23 +11,15 @@ import (
 )
 
 // Notify posts a notification to Slack that the build is complete.
-func Notify(b *cloudbuild.Build, webhook string, project string) {
+func Notify(b *cloudbuild.Build, t *cloudbuild.BuildTrigger, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s?project=%s", b.Id, project)
 	var i string
 	var branch_string string
-	branch_string = "Branch / Tag details feature coming soon"
-	//
-	//
-	//	branch_string = "Source found"
-	//	if b.Source.RepoSource != "" {
-	//		if len(b.Source.RepoSource.brnachName) > 0 {
-	//			branch_string = fmt.Sprintf(`{"text": Branch: %s"}`, b.Source.RepoSource.branchName)
-	//		}
-	//		if len(b.Source.RepoSource.TagName) > 0 {
-	//			branch_string = fmt.Sprintf(`{"text": Tag: %s"}`, b.Source.RepoSource.TagName)
-	//		}
-	//	}
+	branch_string = "Trigger details not found - see logs"
 
+	if t.Name != "" {
+		branch_string = fmt.Sprintf(`{"text": Trigger: %s"}`, t.Name)
+	}
 
 	switch b.Status {
 	case "SUCCESS":
@@ -52,14 +44,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 						}
 					]
 				}
-			]}`,
-		project,
-		b.Id[0:7],
-		i,
-		b.Status,
-		branch_string,
-		url,
-		url)
+			]}`, project, b.Id[0:7], i, b.Status, branch_string, url, url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
