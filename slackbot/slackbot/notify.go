@@ -18,7 +18,7 @@ func Notify(b *cloudbuild.Build, t *cloudbuild.BuildTrigger, webhook string, pro
 	branch_string = "Trigger details not found - see logs"
 
 	if t.Name != "" {
-		branch_string = fmt.Sprintf("Trigger: %s", t.Name)
+		branch_string = fmt.Sprintf("Trigger: %s - %s.", t.Name, t.Description )
 	}
 
 	switch b.Status {
