@@ -20,11 +20,11 @@ func Trigger(ctx context.Context, build string, webhook string) {
 					fmt.Sprintf("--webhook=%s", webhook),
 					"--mode=monitor",
 				},
-				Timeout: "3600",
+				Timeout: "3600s",
 			},
 		},
 		Tags: []string{"slackbot"},
-		Timeout: "3610",
+		Timeout: "3610s",
 	}
 
 	project, err := getProject()
