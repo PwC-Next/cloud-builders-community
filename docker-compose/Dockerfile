@@ -1,6 +1,6 @@
 FROM ubuntu:bionic
 
-ARG version=1.24.0
+ARG version=1.27.4
 
 # https://docs.docker.com/compose/install/
 RUN \
